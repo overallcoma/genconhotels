@@ -1,0 +1,19 @@
+[target-config]
+event-id = 50430831
+owner-id = 10909638
+
+[account-config]
+entry-token = eyJ0eXAiOiJYYYYyyyyYYYyy.eyJwYXlsb2FkIjp7ImxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxhixXNl3d8IfunSeZwK8V4Y
+check-frequency = 3
+
+[search-config]
+search-start = 2023-08-3
+search-end = 2023-08-6
+event-dates = 2023-8-3,2023-8-4,2023-8-5
+event-before = 2021-8-2
+event-after = 2021-8-6
+
+[web-config]
+json-output = ../html/raw.json
+table-json = ../html/data.json
+time-stamp-location = ../html/timestamp

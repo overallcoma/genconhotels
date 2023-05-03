@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        title{
+            text-align: center;
+        }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        div.center{
+            text-align: center;
+        }
+        table {
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1050px;
+        }
+    </style>
+
+    <title>
+        GenCon Hotels
+    </title>
+</head>
+<body>
+<div class="center">
+    <table>
+        <h1>
+            Hotel Room Availability Over Time
+        </h1>
+	<iframe id="graph" src="" width="1000" height="800" frameborder="0"></iframe>
+	<script>
+        	const url_first = 'https://grafana.genconhotels.com/d-solo/7tIc0awWk/gencon-hotel-tracker?orgId=1&panelId=2&from=1582161180000&to=';
+	        const nowtime = Date.now();
+        	let url = url_first.concat(nowtime);
+        	document.getElementById("graph").src = url
+    </script>
+    </table>
+	<br>
+	<br>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_donations" />
+            <input type="hidden" name="business" value="U9W4PB2ZHCSTN" />
+            <input type="hidden" name="item_name" value="Proceeds after expenses will go to Partners for Pets (Troy, IL)" />
+            <input type="hidden" name="currency_code" value="USD" />
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+        </form>
+        <br>
+        Donations will cover my costs to run this site - everything else goes to my local pet shelter.
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+[target-config]
+event-id = 50179638
+owner-id = 10909638
+
+[account-config]
+entry-token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXlsb2FkIjp7ImVudHJ5IjoiUkVHSVNUUkFUSU9OIiwicGFyYW1zIjpbeyJuYW1lIjoiYnJpZGdlSWQiLCJ2YWx1ZSI6IkJLSUJEQTg0LUdGRDYifV19fQ.E4iB42N_AnNnaxheU3ymDb7N3Mj85hcrZ4PJuryyJBA
+check-frequency = 3
+
+[search-config]
+search-start = 2021-09-15
+search-end = 2021-09-20
+event-dates = 2021-9-16,202-9-17,2021-9-18
+event-before = 2021-9-15
+event-after = 2021-9-20
+
+[web-config]
+json-output = /html/raw.json
+table-json = /html/data.json
+time-stamp-location = /html/timestamp
+
+[db-config]
+db-name = gchotels
+db-host = influxdb
+db-port = 8086
+db-username = gchotels
+db-password = gchotels
