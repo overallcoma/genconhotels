@@ -22,6 +22,7 @@ except Exception as e:
 gchw2_config = modules.create_config_object(config)
 print("Gencon-Hotels-Web2 is running")
 error_count = 0
+influxdbclient = modules.get_influx_client()
 
 while True:
     try:
@@ -39,7 +40,7 @@ while True:
 
         modules.write_file(json.dumps(hotel_room_filtered_list), gchw2_config.table_json)
         modules.write_file(json.dumps(hotel_room_objects), gchw2_config.json_output)
-        # modules.influxdb_insert(hotel_room_objects, gchw2_config)
+        modules.send_influx_data(influxdbclient, hotel_room_objects)
         modules.write_timestamp(gchw2_config)
         time.sleep(gchw2_config.check_frequency)
         error_count = 0

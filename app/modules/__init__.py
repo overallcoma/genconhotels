@@ -1,5 +1,6 @@
 from .config import create_config_object
-from .influxdb import influxdb_insert
+from .influxdb import get_influx_client
+from .influxdb import send_influx_data
 from .logic import all_dates_list
 from .logic import format_dateobjects_commas
 from .logic import format_dateobjects_list_dashes
