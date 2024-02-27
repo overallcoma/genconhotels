@@ -18,6 +18,7 @@ except Exception as e:
     print(e)
     exit(1)
 
+
 gchw2_config = modules.create_config_object(config)
 print("Gencon-Hotels-Web2 is running")
 error_count = 0
@@ -25,8 +26,11 @@ error_count = 0
 while True:
     try:
         hotel_room_json = modules.get_hotel_room_objects(gchw2_config)
+        # print(hotel_room_json)
         hotel_room_objects = modules.hotel_room_parser(hotel_room_json)
+        # print(hotel_room_objects)
         hotel_room_filtered_list = modules.filter_avail(hotel_room_objects, gchw2_config)
+        # print(hotel_room_filtered_list)
 
         # # This is a fix for incorrectly coded distance units on Hampton Inn Indianapolis South
         # for hotel_room in hotel_room_filtered_list:
