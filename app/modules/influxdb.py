@@ -1,6 +1,9 @@
 import datetime
 import influxdb
 import modules
+import os, time
+from influxdb_client_3 import InfluxDBClient3, Point
+
 
 
 def get_lowest_inventory(hotel_room_object, config):
@@ -32,14 +35,16 @@ def hotel_json_to_points(hotel_room_json, config):
     return db_insert_list
 
 
-def influxdb_client(config):
-    client = influxdb.InfluxDBClient(host=config.db_host, port=config.db_port, username=config.db_username,
-                                     password=config.db_password, database=config.db_name)
-    return client
+def get_influx_client():
+    token = os.environ.get("INFLUXDB_TOKEN")
+    org = "LoftusHall"
+    host = "https://us-east-1-1.aws.cloud2.influxdata.com"
+
+    client = InfluxDBClient3(host=host, token=token, org=org)
+    return(client)
 
 
-def influxdb_insert(json_object, config):
-    data_to_write = hotel_json_to_points(json_object, config)
-    db_client = influxdb_client(config)
-    db_client.write_points(data_to_write)
-    db_client.close()
+def send_influx_data(client, data):
+    database = "genconhotels"
+    for datapoint in data:
+        client.write(database=database, record=datapoint)

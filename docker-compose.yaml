@@ -7,14 +7,12 @@ services:
     container_name: gchapp
     hostname: gchapp
     restart: unless-stopped
-    depends_on:
-      - gchweb
     environment:
       - TZ=America/New_York
+      - INFLUXDB_TOKEN=5two4eLMQRGi2gJa9x_Cjf6V_hG8-H_vuabKiPGP9Ja835rHF8JUX1NJD5cTheWuYeDA1QVXXBRxmIzqNsMgjg==
     volumes:
       - ./app:/app
       - ./html:/html
-
 
   gchweb:
     image: nginx
@@ -31,6 +29,41 @@ services:
       - 7777:80
     volumes:
       - ./html:/usr/share/nginx/html
+
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: npm
+    hostname: npm
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+
+  portainer:
+    hostname: portainer
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer-data:/data
+    ports:
+      - 9000:9000
+
+volumes:
+  npm-data:
+    name: npm-data
+  npm-letsencrypt:
+    name: npm-letsencrypt
+  portainer-data:
+    name: portainer-data
 
 networks:
   default:
