@@ -32,12 +32,6 @@ while True:
         # print(hotel_room_objects)
         hotel_room_filtered_list = modules.filter_avail(hotel_room_objects, gchw2_config)
         # print(hotel_room_filtered_list)
-
-        # # This is a fix for incorrectly coded distance units on Hampton Inn Indianapolis South
-        # for hotel_room in hotel_room_filtered_list:
-        #     if hotel_room["hotel_name"] == "Hampton Inn Indianapolis South":
-        #         hotel_room["distance_unit"] = 3
-
         modules.write_file(json.dumps(hotel_room_filtered_list), gchw2_config.table_json)
         modules.write_file(json.dumps(hotel_room_objects), gchw2_config.json_output)
         modules.send_influx_data(influxdbclient, hotel_room_objects)
