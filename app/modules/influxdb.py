@@ -36,7 +36,7 @@ def hotel_json_to_points(hotel_room_json, config):
 
 
 def get_influx_client():
-    token = 'j5w0An7UlPG0wFa-WBu-hSW5ntAoZtw2KbSfWevXRkyz_kLRDRBEsqVvGu7mqD6iNoSbI9M8iHHZkggzCqZdow=='
+    token = 'redacted'
     org = "LoftusHall"
     host = "https://us-east-1-1.aws.cloud2.influxdata.com"
 
