@@ -36,7 +36,7 @@ def hotel_json_to_points(hotel_room_json, config):
 
 
 def get_influx_client():
-    token = 'redacted'
+    token = 'j5w0An7UlPG0wFa-WBu-hSW5ntAoZtw2KbSfWevXRkyz_kLRDRBEsqVvGu7mqD6iNoSbI9M8iHHZkggzCqZdow=='
     org = "LoftusHall"
     host = "https://us-east-1-1.aws.cloud2.influxdata.com"
 
@@ -50,7 +50,8 @@ def send_influx_data(client, data):
         point = (
             Point("roomavailable")
             .tag("hotelname", key["hotel_name"])
-            .tag("roomname", key["room_name"])
+            .field("roomname", key["room_name"])
             .field("distance", key["distance_unit"])
+            .field("count", 1)
         )
         client.write(database=database, record=point)
