@@ -1,2 +1,4 @@
 /app/gchw2.cfg
 /docker-compose.yaml
+.idea
+.venv
