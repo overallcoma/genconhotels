@@ -1,5 +1,5 @@
 # genconhotels
-## Configure app/gchw2.cfg with inputs
+## Configure app/gchw2.cfg with appropriate parameters
 ### Fire off in Docker-Compose
 
 ## Application
