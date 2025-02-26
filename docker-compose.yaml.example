@@ -1,0 +1,105 @@
+version: '3'
+
+services:
+
+  gchapp:
+    build: .
+    container_name: gchapp
+    hostname: gchapp
+    restart: unless-stopped
+    environment:
+      - TZ=America/New_York
+      - INFLUXDB_TOKEN=myinfluxdbtoken
+    volumes:
+      - ./app:/app
+      - ./html:/html
+
+  gchweb:
+    image: nginx
+    container_name: gchweb
+    hostname: gchweb
+    restart: unless-stopped
+    depends_on:
+      - gchapp
+    environment:
+      - TZ=America/New_York
+    expose:
+      - 80
+    ports:
+      - 7777:80
+    volumes:
+      - ./html:/usr/share/nginx/html
+
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: npm
+    hostname: npm
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+
+  portainer:
+    hostname: portainer
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer-data:/data
+    ports:
+      - 9000:9000
+
+  gchgrafana:
+    image: grafana/grafana-oss
+    container_name: gchgrafana
+    hostname: gchgrafana
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      - TZ=America/New_York
+      - GF_SECURITY_ADMIN_USER=mygrafanausername
+      - GF_SECURITY_ADMIN_PASSWORD=mygrafanapassword
+    volumes:
+      - gch-grafana:/var/lib/grafana
+
+  gchinfluxdb:
+    image: influxdb:latest
+    container_name: gchinfluxdb
+    hostname: gchinfluxdb
+    restart: unless-stopped
+    ports:
+      - 8086:8086
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - gch-influxdb-config:/etc/influxdb2
+      - gch-influxdb-data:/var/lib/influxdb2
+
+volumes:
+  npm-data:
+    name: npm-data
+  npm-letsencrypt:
+    name: npm-letsencrypt
+  portainer-data:
+    name: portainer-data
+  gch-grafana:
+    name: gch-grafana
+  gch-influxdb-data:
+    name: gch-influxdb-data
+  gch-influxdb-config:
+    name: gch-influxdb-config
+
+
+networks:
+  default:
+    external:
+      name: gchnet
