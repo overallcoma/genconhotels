@@ -1,4 +1,2 @@
 requests
 influxdb
-influxdb3-python
-pandas

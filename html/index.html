@@ -122,11 +122,10 @@
                             columns: [
                                 {title: "Room Name", field: "room_name", headerSort:false},
                                 {title: "Rate", field: "room_rate", headerSort:false},
-                                {title: "We", field: "2024-7-31", headerSort:false},
-                                {title: "Th", field: "2024-8-1", headerSort:false},
-                                {title: "Fr", field: "2024-8-2", headerSort:false},
-                                {title: "Sa", field: "2024-8-3", headerSort:false},
-                                {title: "Su", field: "2024-8-4", headerSort:false},
+                                {title: "We", field: "2025-7-30", headerSort:false},
+                                {title: "Th", field: "2025-7-31", headerSort:false},
+                                {title: "Fr", field: "2025-8-1", headerSort:false},
+                                {title: "Sa", field: "2025-8-2", headerSort:false},
                                 {title: "distance_unit", field: "distance_unit", visible:false},
                                 {title: "distance", field: "distance", visible:false}
                             ],
@@ -223,14 +222,12 @@
         <div id="alert_open_portal_url_check"></div>
     </div>
 </div>
-<br>
 <div class="center" id="portal_url_tip" style="display: none;">
     Valid Link format:
     <br>
     https://book.passkey.com/entry?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXlsb2FkIjp7ImVudHJ5IjoiUkVHSVNUUkFUSU9OIiwicGFyYW1zIjpbeyJuYW1lIjoiYnJpZGdlSWQiLCJ2YWx1ZSI6IlFST09NU1NVQy1LUzQ0In1dfX0.cptdYWPJGGTzIIhm-PkIoOHOtNIdL7447G4oioNu1Jc
     <br>
 </div>
-<br>
 
 <script>
     let alert_active = false;
@@ -314,7 +311,7 @@
             text_alertsPortalUrl.value = "";
             text_alertsPortalUrl.disabled = true;
             portalurl_tip.style.display = "none";
-            alertPortal_active = false;
+           alertPortal_active = false;
         }
     }
 
@@ -347,7 +344,7 @@
             alertPortal_active = false;
             check_alertsPortalUrl.innerHTML = "Invalid Link - Disabled";
             check_alertsPortalUrl.style.color = "Red";
-        }
+       }
     }
 
     function alert_fire() {
@@ -369,22 +366,18 @@
 </script>
 
 <div class="center">
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-        <input name="cmd" type="hidden" value="_donations"/>
-        <input name="business" type="hidden" value="U9W4PB2ZHCSTN"/>
-        <input name="item_name" type="hidden"
-               value="Beer Money"/>
-        <input name="currency_code" type="hidden" value="USD"/>
-        <input alt="Donate with PayPal button" name="submit"
-               src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
-               title="PayPal - The safer, easier way to pay online!" type="image"/>
-    </form>
     <h3>
-        Thank you to all of the <a href="/thankyou.html">DONORS!</a>
+        Thank you to all the <a href="/thankyou.html">DONORS!</a>
     </h3>
-    Donations go to beer money this year!
-    <br>
-    <br>
+</div>
+<div class="center">
+<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'C0C51B1CRR');kofiwidget2.draw();</script>
+</div>
+<br>
+<div class="center">
+    <h3>
+        <a href="https://grafana.genconhotels.com/public-dashboards/f9a14a1622b64ac993590740a3a79608?orgId=1&from=now-24h&to=now&timezone=browser">View Historical Data</a>
+    </h3>
 </div>
 <script>
     let egg = new Egg();

@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     environment:
       - TZ=America/New_York
-      - INFLUXDB_TOKEN=5two4eLMQRGi2gJa9x_Cjf6V_hG8-H_vuabKiPGP9Ja835rHF8JUX1NJD5cTheWuYeDA1QVXXBRxmIzqNsMgjg==
+      - INFLUXDB_TOKEN=myinfluxdbtoken
     volumes:
       - ./app:/app
       - ./html:/html
@@ -57,6 +57,33 @@ services:
     ports:
       - 9000:9000
 
+  gchgrafana:
+    image: grafana/grafana-oss
+    container_name: gchgrafana
+    hostname: gchgrafana
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      - TZ=America/New_York
+      - GF_SECURITY_ADMIN_USER=mygrafanausername
+      - GF_SECURITY_ADMIN_PASSWORD=mygrafanapassword
+    volumes:
+      - gch-grafana:/var/lib/grafana
+
+  gchinfluxdb:
+    image: influxdb:latest
+    container_name: gchinfluxdb
+    hostname: gchinfluxdb
+    restart: unless-stopped
+    ports:
+      - 8086:8086
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - gch-influxdb-config:/etc/influxdb2
+      - gch-influxdb-data:/var/lib/influxdb2
+
 volumes:
   npm-data:
     name: npm-data
@@ -64,6 +91,13 @@ volumes:
     name: npm-letsencrypt
   portainer-data:
     name: portainer-data
+  gch-grafana:
+    name: gch-grafana
+  gch-influxdb-data:
+    name: gch-influxdb-data
+  gch-influxdb-config:
+    name: gch-influxdb-config
+
 
 networks:
   default:
