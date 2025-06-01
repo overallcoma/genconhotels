@@ -18,6 +18,8 @@ def hotel_room_parser(hotel_json_list):
             hotel_room_object = {"hotel_name": hotel_name, "hotel_id": hotel_id, "distance": hotel_distance,
                                  "distance_unit": hotel_distance_unit, "room_name": room_name, "room_id": room_id,
                                  "room_rate": room_rate}
+            hotel_room_object["distance"] = round(float(hotel_room_object["distance"]), 1)
+
 
             for day in block["inventory"]:
                 date = day["date"]
