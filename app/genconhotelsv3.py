@@ -1,7 +1,8 @@
 import configparser
-import time
+import datetime
 import json
 import modules
+import time
 
 try:
     configfilename = "./config.ini"
@@ -18,10 +19,10 @@ except Exception as e:
     print(e)
     exit(1)
 
-
 gch_config = modules.create_config_object(config)
 print("genconhotels3 is running")
 error_count = 0
+loop_count = 0
 
 while True:
     try:
@@ -29,6 +30,11 @@ while True:
         modules.write_file(json.dumps(dict_hotels), gch_config.json_output)
         modules.write_timestamp(gch_config)
         time.sleep(gch_config.frequency)
+        loop_count += 1
+        if loop_count >= 100:
+            loop_count = 0
+            loop_time = str(datetime.datetime.now())
+            print(loop_time + " - 100 successful loops")
     except Exception as e:
         print('ERROR OCCURRED')
         print(e)
