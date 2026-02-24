@@ -26,7 +26,6 @@ error_count = 0
 while True:
     try:
         dict_hotels = modules.get_hotelobjects(gch_config)
-        print(dict_hotels)
         modules.write_file(json.dumps(dict_hotels), gch_config.json_output)
         modules.write_timestamp(gch_config)
         time.sleep(gch_config.frequency)
