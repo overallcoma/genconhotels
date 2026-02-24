@@ -1,0 +1,35 @@
+services:
+  gchapp:
+    build: .
+    container_name: gchapp
+    hostname: gchapp
+    restart: unless-stopped
+    environment:
+      - TZ=America/New_York
+    networks:
+      - genconnet
+    volumes:
+      - ./app:/app
+      - ./web:/web
+
+  gchweb:
+    image: nginx
+    container_name: gchweb
+    hostname: gchweb
+    restart: unless-stopped
+    depends_on:
+      - gchapp
+    environment:
+      - TZ=America/New_York
+    networks:
+      - genconnet
+    expose:
+      - 80
+    ports:
+      - 7777:80
+    volumes:
+      - ./web:/usr/share/nginx/html
+
+networks:
+  genconnet:
+    external: True
