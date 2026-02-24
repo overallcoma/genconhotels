@@ -1,0 +1,21 @@
+[event]
+event-id = 51118112
+owner-id = 10909638
+wednesday = 2026-07-29
+thursday = 2026-07-30
+friday = 2026-07-31
+saturday = 2026-08-01
+sunday = 2026-08-02
+
+[account]
+token = Ue6mc9Mj3Mkm6LaNDcmPwMjG4JfctfhSjF1b.x9Ki21mZnYHA3KtT6Cmzqq5uLqut6vnbkZTzbqauYxydkwwAiKLZr8cy0vy0FBAMWZXTdW0ZA5nSjCH322xPSpY8n053r12V8hdfCpak9p158b3i8iRCCQNGzprZrr05bYPGPV4HM.3x1sByDfejGsQ6p_bTTSqMb2ovBmgukNRjg_f9vCEWo
+
+[search]
+frequency = 30
+
+[web]
+formatted = /web/data.json
+timestamp = /web/timestamp.txt
+
+[misc]
+useragent = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36
