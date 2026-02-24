@@ -19,7 +19,6 @@ except Exception as e:
     print(e)
     exit(1)
 
-
 gch_config = modules.create_config_object(config)
 print("genconhotels3 is running")
 error_count = 0
