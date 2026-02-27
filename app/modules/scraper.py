@@ -1,9 +1,9 @@
 import datetime
+import html
 import json
+from .common import write_file
 import re
 import requests
-import html
-
 
 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 " \
     "Safari/537.36"
@@ -30,7 +30,7 @@ def construct_search_post(config, xsrf_token):
         '_csrf': xsrf_token,
         'blockMap.blocks[0].hotelId': search_block_hotelid,
         'blockMap.blocks[0].blockId': search_block_id,
-        'blockMap.blocks[0].checkIn': config.thursday,
+        'blockMap.blocks[0].checkIn': config.wednesday,
         'blockMap.blocks[0].checkOut': config.sunday,
         'blockMap.blocks[0].numberOfGuests': search_numberofguests,
         'blockMap.blocks[0].numberOfRooms': search_numberofrooms,
@@ -48,8 +48,29 @@ def filter_hotelobjects(dictlist_hotels):
                     'hotel_name': dict_hotel['name'],
                     'distance': round(dict_hotel['distanceFromEvent'],2),
                     'room_name': block['name'],
-                    'rate': block['averageRate']
+                    'rate': block['averageRate'],
                 }
+                for date_entry in block['inventory']:
+                    if date_entry['date'] == [2026,7,29] and date_entry['available'] != 0:
+                        if date_entry['wlAvailable'] < date_entry["available"]:
+                            room['wednesday'] = 'Open'
+                        elif date_entry['wlAvailable'] >= date_entry["available"]:
+                            room['wednesday'] = 'WL'
+                    if date_entry['date'] == [2026,7,30] and date_entry['available'] != 0:
+                        if date_entry['wlAvailable'] < date_entry["available"]:
+                            room['thursday'] = 'Open'
+                        elif date_entry['wlAvailable'] >= date_entry["available"]:
+                            room['thursday'] = 'WL'
+                    if date_entry['date'] == [2026,7,31] and date_entry['available'] != 0:
+                        if date_entry['wlAvailable'] < date_entry["available"]:
+                            room['friday'] = 'Open'
+                        elif date_entry['wlAvailable'] >= date_entry["available"]:
+                            room['friday'] = 'WL'
+                    if date_entry['date'] == [2026,8,1] and date_entry['available'] != 0:
+                        if date_entry['wlAvailable'] < date_entry["available"]:
+                            room['saturday'] = 'Open'
+                        elif date_entry['wlAvailable'] >= date_entry["available"]:
+                            room['saturday'] = 'WL'
                 filter_return.append(room)
     return filter_return
 
@@ -103,7 +124,9 @@ def get_hotelobjects(config):
     response = requests.post(post_room_select_url, data=post_data, headers=user_agent_header, cookies=response_cookies)
     try:
         hotels = passkey_parse(response.text)
+        #write_file(json.dumps(hotels), 'testout.txt')
         hotels = filter_hotelobjects(hotels)
+        #write_file(json.dumps(hotels), 'testout2.txt')
         hotels = distance_type(hotels)
         hotels = roomname_unescapehtml(hotels)
 

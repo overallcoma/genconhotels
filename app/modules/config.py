@@ -10,6 +10,7 @@ def create_config_object(config):
     gch_config.owner_id = (config["event"])["owner-id"]
     gch_config.token = (config["account"])["token"]
     gch_config.frequency = int((config["search"])["frequency"])
+    gch_config.tuesday = (config["event"])["tuesday"]
     gch_config.wednesday = (config["event"])["wednesday"]
     gch_config.thursday = (config["event"])["thursday"]
     gch_config.friday = (config["event"])["friday"]
