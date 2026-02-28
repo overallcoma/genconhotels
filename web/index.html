@@ -41,6 +41,10 @@
             clear: both;
         }
 
+        .checkmark{
+            color:green;
+        }
+
         #Gencon-Hotels .tabulator-row.tabulator-group {
             background: #333333;
             color: #ffffff;
@@ -105,12 +109,31 @@
                                 return value + " (" + distance_print + " miles)";
                             },
                             initialSort: [
-                                {column: "distance", sorter: "number", dir: "asc"}
+                                {column: "distance", sorter: "number", dir: "asc"},
+                                {column: "all_open", sorter: "string", dir: "desc"},
                             ],
                             columns: [
                                 {title: "Room Name", field: "room_name", headerSort:false},
-                                {title: "Rate", field: "rate", sorter: "number", headerHozAlign: "right", headerSort:false},
+                                {
+                                    title: "All Days",
+                                    field: "all_open",
+                                    formatter: "html",
+                                    align: "center",
+                                    headerSort:false,
+                                    mutator: function(value, data, type, mutatorParams){
+                                        if (data.wednesday ==="Open" && data.thursday ==="Open" && data.friday ==="Open" && data.saturday ==="Open") {
+                                            return "<span>&#9989;</span>";
+                                        }else {
+                                            return " ";
+                                        }
+                                    }
+                                },
+                                {title: "Wed", field: "wednesday", headerSort:false},
+                                {title: "Thu", field: "thursday", headerSort:false},
+                                {title: "Fri", field: "friday", headerSort:false},
+                                {title: "Sat", field: "saturday", headerSort:false},
                                 {title: "Distance", field: "distance", sorter: "number", headerSort:false, visible:false},
+                                {title: "Rate", field: "rate", sorter: "number", headerHozAlign: "right", headerSort:false},
                             ],
                             rowFormatter: function (row) {
                                 let data = row.getData();
@@ -179,7 +202,7 @@
         <label for="alerts_skywalk">On Skywalk</label>
         <br>
         <input disabled id="alerts_blocks" name="Alerts On" onchange="alertsEnabled()" type="checkbox" value="Disabled">
-        <label for="alerts_blocks">On Block(s)</label>
+        <label for="alerts_blocks">On Downtown</label>
     </div>
     <div class="column">
         <input disabled id="audio_alerts" name="Alerts On" onchange="alertsEnabled()" type="checkbox" value="Disabled">
@@ -370,5 +393,4 @@
             yay.play();
         }).listen();
 </script>
-</body>
-</html>
+</b

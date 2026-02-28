@@ -1,2 +1,4 @@
 app/config.ini
 /.idea
+/app/modules/__pycache__
+/app/modules/__pycache__
