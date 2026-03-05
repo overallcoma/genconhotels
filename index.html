@@ -72,6 +72,8 @@
         let tableData = "";
         let firstrun_table = 1;
         let firstrun_timestamp = 1;
+        let tableRef = null;
+
         function refreshTable() {
             let fetchInit = {
                 cache: "no-store"
@@ -93,51 +95,54 @@
                             $("#Gencon-Hotels").fadeIn("fast");
                         }
                         firstrun_table = 0;
-                        new Tabulator("#Gencon-Hotels", {
-                            autoResize: true,
-                            movableRows: false,
-                            layout:"fitDataFill",
-                            data: tableData,
-                            groupBy: "hotel_name",
-                            groupToggleElement: false,
-                            groupHeader:function(value, count, data, group){
-                                let distance_print = data[0].distance;
-                                return value + " (" + distance_print + " miles)";
-                            },
-                            initialSort: [
-                                {column: "distance", sorter: "number", dir: "asc"}
-                            ],
-                            columns: [
-                                {title: "Room Name", field: "room_name", headerSort:false},
-                                {title: "Wed", field: "wednesday", headerSort:false},
-                                {title: "Thu", field: "thursday", headerSort:false},
-                                {title: "Fri", field: "friday", headerSort:false},
-                                {title: "Sat", field: "saturday", headerSort:false},
-                                {title: "Rate", field: "rate", sorter: "number", headerHozAlign: "right", headerSort:false},
-                                {title: "Distance", field: "distance", sorter: "number", headerSort:false, visible:false},
-                            ],
-                            rowFormatter: function (row) {
-                                let data = row.getData();
-                                if (data.skywalk === 1) {
-                                    row.getElement().style.backgroundColor = "#008000";
-                                    if (alert_active === true) {
-                                        if ((alert_active_skywalk === true) && (alert_fired === false)) {
-                                            alert_fire();
-                                            alert_fired = true;
+                        if (!tableRef) {
+                            tableRef = new Tabulator("#Gencon-Hotels", {
+                                autoResize: true,
+                                movableRows: false,
+                                layout:"fitDataFill",
+                                data: tableData,
+                                groupBy: "hotel_name",
+                                groupToggleElement: false,
+                                groupHeader:function(value, count, data, group){
+                                    let distance_print = data[0].distance;
+                                    return value + " (" + distance_print + " miles)";
+                                },
+                                initialSort: [
+                                    {column: "distance", sorter: "number", dir: "asc"}
+                                ],
+                                columns: [
+                                    {title: "Room Name", field: "room_name", headerSort:false},
+                                    {title: "Wed", field: "wednesday", headerSort:false},
+                                    {title: "Thu", field: "thursday", headerSort:false},
+                                    {title: "Fri", field: "friday", headerSort:false},
+                                    {title: "Sat", field: "saturday", headerSort:false},
+                                    {title: "Rate", field: "rate", sorter: "number", headerHozAlign: "right", headerSort:false},
+                                    {title: "Distance", field: "distance", sorter: "number", headerSort:false, visible:false},
+                                ],
+                                rowFormatter: function (row) {
+                                    let data = row.getData();
+                                    if (data.skywalk === 1) {
+                                        row.getElement().style.backgroundColor = "#008000";
+                                        if (alert_active === true) {
+                                            if ((alert_active_skywalk === true) && (alert_fired === false)) {
+                                                alert_fire();
+                                                alert_fired = true;
+                                            }
+                                        }
+                                    }
+                                    if (data.downtown === 1) {
+                                        row.getElement().style.backgroundColor = "#00008B";
+                                        if (alert_active === true) {
+                                            if ((alert_active_blocks === true) && (alert_fired === false)) {
+                                                alert_fire();
+                                                alert_fired = true;
+                                            }
                                         }
                                     }
                                 }
-                                if (data.downtown === 1) {
-                                    row.getElement().style.backgroundColor = "#00008B";
-                                    if (alert_active === true) {
-                                        if ((alert_active_blocks === true) && (alert_fired === false)) {
-                                            alert_fire();
-                                            alert_fired = true;
-                                        }
-                                    }
-                                }
-                            }
-                        })
+                            })
+                        }
+                        tableRef.setData(tableData);
                     }
                 });
             $("#Gencon-Hotels").fadeIn("fast");
