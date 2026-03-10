@@ -2,3 +2,7 @@ app/config.ini
 /.idea
 /app/modules/__pycache__
 /app/modules/__pycache__
+web/data.json
+/web/.idea
+/app/modules/__pycache__
+/app/modules/__pycache__
