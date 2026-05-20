@@ -76,6 +76,9 @@
         let firstrun_table = 1;
         let firstrun_timestamp = 1;
         let tableRef = null;
+        let audioCooldownMs = 2 * 1000;
+        let portalCooldownMs = 30 * 1000;
+        let portalCooldownTimer = null;
         function refreshTable() {
             let fetchInit = {
                 cache: "no-store"
@@ -90,7 +93,6 @@
                 .then(function (tableData_Update) {
                     let tableData_Update_Check = JSON.stringify(tableData_Update);
                     let tableData_Check = JSON.stringify(tableData);
-                    let alert_fired = false;
                     if (tableData_Update_Check !== tableData_Check) {
                         tableData = tableData_Update;
                         if (firstrun_table === 0) {
@@ -102,7 +104,7 @@
                                 autoResize: false,
                                 movableRows: false,
                                 layout: "fitDataFill",
-                                height: "2500px",
+                                height: "65vh",
                                 data: tableData,
                                 groupBy: "hotel_name",
                                 groupToggleElement: false,
@@ -154,18 +156,16 @@
                                     if (data.skywalk === 1) {
                                         row.getElement().style.backgroundColor = "#008000";
                                         if (alert_active === true) {
-                                            if ((alert_active_skywalk === true) && (alert_fired === false)) {
+                                            if (alert_active_skywalk === true) {
                                                 alert_fire();
-                                                alert_fired = true;
                                             }
                                         }
                                     }
                                     if (data.downtown === 1) {
                                         row.getElement().style.backgroundColor = "#00008B";
                                         if (alert_active === true) {
-                                            if ((alert_active_blocks === true) && (alert_fired === false)) {
+                                            if (alert_active_blocks === true) {
                                                 alert_fire();
-                                                alert_fired = true;
                                             }
                                         }
                                     }
@@ -268,6 +268,9 @@
     let text_alertsPortalUrl = document.getElementById("alert_open_portal_url");
     let check_alertsPortalUrl = document.getElementById("alert_open_portal_url_check");
     let portalurl_tip = document.getElementById("portal_url_tip");
+    let portalOpenHandle = null;
+    let prevent_audio = false;
+    let prevent_portal = false;
 
     function alertsEnabled() {
         if (checkbox_alertsActive.checked === true) {
@@ -368,19 +371,35 @@
     }
 
     function alert_fire() {
-        if (alertAudio_active) {
+        if (alertAudio_active && !prevent_audio) {
             let audio = "";
             if (alertAudio_active_quiet) {
                 audio = new Audio("audio/alert_subtle.wav");
+                audio.addEventListener("ended", () => {
+                    setTimeout(()=> {prevent_audio = false;}, audioCooldownMs);
+                });
+                prevent_audio = true;
                 audio.play();
             }
             if (alertAudio_active_loud) {
                 audio = new Audio("audio/alert_loud.wav");
+                audio.addEventListener("ended", () => {
+                    setTimeout(()=> {prevent_audio = false;}, audioCooldownMs);
+                });
+                prevent_audio = true;
                 audio.play();
             }
         }
-        if (alertPortal_active) {
-            window.open(alertPortal_active_url);
+        if (portalOpenHandle != null) {
+            if (portalOpenHandle.closed) {
+                portalOpenHandle = null;
+            }
+        }
+        if (alertPortal_active && (portalOpenHandle == null) && (portalCooldownTimer == null)) {
+            portalOpenHandle = window.open(alertPortal_active_url);
+            portalCooldownTimer = setTimeout(()=>{
+                portalCooldownTimer = null;
+            }, portalCooldownMs);
         }
     }
 </script>
